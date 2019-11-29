@@ -3,6 +3,7 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { getAudioFeaturesForPlaylist } from '../utils/api'
 import { Playlist } from '../types'
+import { getAverageAudioFeaturesForPlaylist } from '../utils/api'
 
 interface Props {
   onClick: (playlist: Playlist) => void
