@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 import { getAudioFeaturesForPlaylist } from '../utils/api'
+import { Playlist } from '../types'
 
-const InputWithButton = props => {
+interface Props {
+  setPlaylist: (playlist: Playlist) => void
+  buttonText: React.ReactNode
+}
+
+const InputWithButton = (props: Props) => {
   const [inputId, setInputId] = useState('')
 
-  const handleInputChange = event => {
+  const handleInputChange = (event: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
     setInputId(event.target.value)
   }
 
-  const handleButtonClick = async (event, props) => {
+  const handleButtonClick = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    props: Props
+  ) => {
     event.preventDefault()
     const res = await getAudioFeaturesForPlaylist(inputId)
     props.setPlaylist(res)

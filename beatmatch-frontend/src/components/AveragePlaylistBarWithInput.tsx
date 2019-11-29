@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-import { VictoryChart, VictoryBar } from 'victory'
+import { VictoryBar } from 'victory'
 import InputWithButton from './InputWithButton'
-import { calculateAverageDanceability } from '../utils/api'
+import { Playlist } from '../types'
 
-const AveragePlaylistBarWithInput = props => {
-  const [playlist, setPlaylist] = useState([])
+const AveragePlaylistBarWithInput = () => {
+  const [playlist, setPlaylist] = useState<Playlist>([])
   return (
     <div>
       {console.log(playlist)}
       <InputWithButton buttonText="Test" setPlaylist={setPlaylist} />
-      {calculateAverage(playlist)}
       <VictoryBar
         style={{ data: { fill: '#c43a31' } }}
         data={[
