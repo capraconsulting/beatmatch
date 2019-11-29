@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var router = express.Router();
 var Spotify = require('node-spotify-api');
 var config = require('../config.js');
@@ -7,6 +8,8 @@ var spotify = new Spotify({
   id: config.spotify.client_id,
   secret: config.spotify.secret
 });
+
+router.use(cors);
 
 
 /* GET songs for playlist. */
