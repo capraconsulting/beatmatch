@@ -1,6 +1,4 @@
-export interface Playlist {}
-
-export interface PlaylistAverageAudioFeatures {
+export interface AudioFeatures {
   danceability: number
   energy: number
   speechiness: number
@@ -11,4 +9,15 @@ export interface PlaylistAverageAudioFeatures {
   tempo: number
   loudness: number
   mode: number
+}
+
+interface Track extends AudioFeatures {
+  name: string
+}
+
+interface AverageAudioFeatures extends AudioFeatures {}
+
+interface Playlist {
+  average: AverageAudioFeatures
+  tracks: Track[]
 }
