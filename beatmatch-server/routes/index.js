@@ -13,15 +13,15 @@ var spotify = new Spotify({
 router.get('/playlist/:playlist_id', function(req, res, next) {
   spotify
   .request(`${config.spotify.baseUrl}/playlists/${req.params.playlist_id}`)
-  .then(function(data) {
-    console.log(data);
+  .then(function(tracks) {
     
-    var track_ids = getTrackIds(data.tracks.items);
+    var track_ids = getTrackIds(tracks.tracks.items);
     var track_ids_string = track_ids.join(",");
     spotify
     .request(`${config.spotify.baseUrl}/audio-features/?ids=${track_ids_string}`)
-    .then(function(data2) {
-      return res.send(data2);
+    .then(function(audio_features) {
+      var mergedSongs = mergeSongsWithAudioFeatures(tracks.tracks.items, audio_features.audio_features);
+      return res.send(mergedSongs);
     })
     .catch(function(err) {
       console.error('Error occurred: ' + err); 
@@ -52,6 +52,31 @@ router.get('/song/features/:songid', function(req, res, next) {
   })
 });
 
+function mergeSongsWithAudioFeatures(track_items, audio_features) {
+  console.log(track_items[0]);
+
+  var mergedSongs = [];
+  for (var i = 0; i < track_items.length; i++) {
+    for (var j = 0; j < audio_features.length; j++) {
+      if (track_items[i].track.id == audio_features[j].id) {
+
+        var newTrackItem = {};
+        newTrackItem["popularity"] = track_items[i].track.popularity;
+        newTrackItem["name"] = track_items[i].track.name;
+        newTrackItem["artists"] = track_items[i].track.artists;
+        var track_data = {
+          "track_data": newTrackItem
+        }
+
+        var mergedSong = {...track_data, ...audio_features[j]};
+        //var mergedSong = {...track_items[i], ...audio_features[j]};
+        mergedSongs.push(mergedSong);
+      }
+    }
+  }
+  return mergedSongs;
+}
+
 function getTrackIds(track_items) {
   var track_ids = [];
   for (var i = 0; i < track_items.length; i++) {
@@ -61,18 +86,6 @@ function getTrackIds(track_items) {
   return track_ids;
 }
 
-function mergeSongsWithAudioFeatures(track_items, audio_features) {
-  var mergedSongs = [];
-  for (var i = 0; i < track_items.length; i++) {
-    for (var j = 0; j < audio_features.length; j++) {
-      if (track_items.items[i].track.id == audio_features[j].id) {
-        var mergedSong = {...track_items.items[i], ...audio_features[j]};
-        mergedSongs.push(mergedSong);
-      }
-    }
-  }
-  return mergedSongs;
-}
 
 function getSong(id, cb) {
   spotify
