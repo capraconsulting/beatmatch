@@ -8,16 +8,6 @@ var spotify = new Spotify({
 });
 
 
-function getTrackIds(track_items) {
-  var track_ids = [];
-  for (var i = 0; i < track_items.length; i++) {
-    var track_id = track_items[i].track.id;
-    console.log(track_id);
-    track_ids.push(track_id);
-  }
-  return track_ids;
-}
-
 /* GET songs for playlist. */
 router.get('/playlist/:playlist_id', function(req, res, next) {
   spotify
@@ -33,29 +23,68 @@ router.get('/playlist/:playlist_id', function(req, res, next) {
 
 /* GET single song */
 router.get('/song/:songid', function(req, res, next) {
-  const id = req.params.songid;
-  spotify
-  .request(`${config.spotify.baseUrl}/tracks/${id}`)
-  .then(function(data) {
-    res.send(data);
-  })
-  .catch(function(err) {
-    console.error('Error occurred: ' + err); 
+  getSong(req.params.songid, function(err, data) {
+    if (err) {
+      throw err;
+    }
+    return res.send(data);
   });
 });
 
 /* GET audio features for song */
 router.get('/song/features/:songid', function(req, res, next) {
-  const id = req.params.songid;
+  getSongFeatures(req.params.songid, function(err, data) {
+    if (err) {
+      throw err;
+    }
+    return res.send(data);
+  })
+});
+
+function getFeaturesForTracks(track_ids, cb) {
+  
+  async.forEach(track_ids, function(track_id, async_cb) {
+    
+  }, function(err) {
+    if (err) {
+      cb(err);
+    }
+    cb();
+  });
+}
+
+function getTrackIds(track_items) {
+  var track_ids = [];
+  for (var i = 0; i < track_items.length; i++) {
+    var track_id = track_items[i].track.id;
+    console.log(track_id);
+    track_ids.push(track_id);
+  }
+  return track_ids;
+}
+
+function getSong(id, cb) {
+  spotify
+  .request(`${config.spotify.baseUrl}/tracks/${id}`)
+  .then(function(data) {
+    cb(null, data);
+  })
+  .catch(function(err) {
+    cb(err);
+  });
+}
+
+
+
+function getSongFeatures(id, cb) {
   spotify
   .request(`${config.spotify.baseUrl}/audio-features/${id}`)
   .then(function(data) {
-    res.send(data);
+    cb(null, data);
   })
   .catch(function(err) {
-    console.error('Error occurred: ' + err); 
+    cb(err);
   });
-});
-
+}
 
 module.exports = router;
