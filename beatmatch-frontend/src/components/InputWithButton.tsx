@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import { getAudioFeaturesForPlaylist } from '../utils/api'
 import { Playlist } from '../types'
 
 interface Props {
-  setPlaylist: (playlist: Playlist) => void
+  onClick: (playlist: Playlist) => void
   buttonText: React.ReactNode
 }
 
@@ -22,20 +24,19 @@ const InputWithButton = (props: Props) => {
   ) => {
     event.preventDefault()
     const res = await getAudioFeaturesForPlaylist(inputId)
-    props.setPlaylist(res)
+    props.onClick(res)
   }
 
   return (
     <div>
-      <input
-        type="text"
+      <Input
         placeholder="Playlist id"
         value={inputId}
         onChange={handleInputChange}
       />
-      <button onClick={event => handleButtonClick(event, props)}>
+      <Button onClick={event => handleButtonClick(event, props)}>
         {props.buttonText}
-      </button>
+      </Button>
     </div>
   )
 }

@@ -8,7 +8,7 @@ const AveragePlaylistBarWithInput = () => {
   return (
     <div>
       {console.log(playlist)}
-      <InputWithButton buttonText="Test" setPlaylist={setPlaylist} />
+      <InputWithButton buttonText="Find playlist" onClick={setPlaylist} />
       <VictoryBar
         style={{ data: { fill: '#c43a31' } }}
         data={[
