@@ -11,13 +11,13 @@ export interface AudioFeatures {
   mode: number
 }
 
-interface Track extends AudioFeatures {
+export interface Track extends AudioFeatures {
   name: string
 }
 
-interface AverageAudioFeatures extends AudioFeatures {}
+export interface AverageAudioFeatures extends AudioFeatures {}
 
-interface Playlist {
+export interface Playlist {
   average: AverageAudioFeatures
   tracks: Track[]
 }
