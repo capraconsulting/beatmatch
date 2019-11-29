@@ -38,11 +38,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const baseurl = "https://apis.vinmonopolet.no";
-
-app.get(baseurl+'/get/data', function(req, res) {
-  return "hello";
-  
-})
-
 app.listen(3000);
