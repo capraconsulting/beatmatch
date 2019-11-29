@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { VictoryBar } from 'victory'
 import InputWithButton from './InputWithButton'
-import { PlaylistAverageAudioFeatures } from '../types'
+import { AudioFeatures } from '../types'
 
 const AveragePlaylistBarWithInput = () => {
-  const [playlist, setPlaylist] = useState<PlaylistAverageAudioFeatures | null>(
-    null
-  )
+  const [playlist, setPlaylist] = useState<AudioFeatures | null>(null)
   return (
     <div>
       <InputWithButton buttonText="Find playlist" onClick={setPlaylist} />
