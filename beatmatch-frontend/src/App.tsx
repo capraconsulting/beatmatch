@@ -1,5 +1,4 @@
 import React from 'react'
-import InputWithButton from './components/InputWithButton'
 import AveragePlaylistBarWithInput from './components/AveragePlaylistBarWithInput'
 import './App.css'
 
