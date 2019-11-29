@@ -6,7 +6,7 @@ import { Playlist } from '../types'
 import { getAverageAudioFeaturesForPlaylist } from '../utils/api'
 
 interface Props {
-  onClick: (playlist: Playlist) => void
+  setPlaylist: (playlist: PlaylistAverageAudioFeatures) => void
   buttonText: React.ReactNode
 }
 

@@ -9,4 +9,6 @@ export interface PlaylistAverageAudioFeatures {
   liveness: number
   valence: number
   tempo: number
+  loudness: number
+  mode: number
 }
