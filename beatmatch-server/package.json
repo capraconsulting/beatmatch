@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --exec babel-node app.js"
   },
   "dependencies": {
     "async": "^3.1.0",
@@ -20,6 +20,10 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "husky": "3.1.0",
     "prettier": "^1.19.1",
     "pretty-quick": "2.0.1"
