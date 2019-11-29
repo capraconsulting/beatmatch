@@ -9,7 +9,9 @@ var spotify = new Spotify({
   secret: config.spotify.secret
 });
 
-router.use(cors);
+router.use(cors({
+  origin: '*'
+}));
 
 
 /* GET songs for playlist. */
