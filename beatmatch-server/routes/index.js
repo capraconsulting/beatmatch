@@ -14,6 +14,8 @@ router.get('/playlist/:playlist_id', function(req, res, next) {
   spotify
   .request(`${config.spotify.baseUrl}/playlists/${req.params.playlist_id}`)
   .then(function(data) {
+    console.log(data);
+    
     var track_ids = getTrackIds(data.tracks.items);
     var track_ids_string = track_ids.join(",");
     spotify
@@ -50,32 +52,26 @@ router.get('/song/features/:songid', function(req, res, next) {
   })
 });
 
-function getFeaturesForTracks(track_ids, cb) {
-  async.forEach(track_ids, function(track_id, async_cb) {
-    getSongFeatures(track_id, function(err, data) {
-      console.log();
-      
-      if (err) {
-        async_cb(err);
-      }
-      async_cb(null, data);
-    });
-  }, function(err) {
-    if (err) {
-      cb(err);
-    }
-    cb();
-  });
-}
-
 function getTrackIds(track_items) {
   var track_ids = [];
   for (var i = 0; i < track_items.length; i++) {
     var track_id = track_items[i].track.id;
-    console.log(track_id);
     track_ids.push(track_id);
   }
   return track_ids;
+}
+
+function mergeSongsWithAudioFeatures(track_items, audio_features) {
+  var mergedSongs = [];
+  for (var i = 0; i < track_items.length; i++) {
+    for (var j = 0; j < audio_features.length; j++) {
+      if (track_items.items[i].track.id == audio_features[j].id) {
+        var mergedSong = {...track_items.items[i], ...audio_features[j]};
+        mergedSongs.push(mergedSong);
+      }
+    }
+  }
+  return mergedSongs;
 }
 
 function getSong(id, cb) {
