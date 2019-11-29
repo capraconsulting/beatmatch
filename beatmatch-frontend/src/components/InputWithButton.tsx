@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-import { getAudioFeaturesForPlaylist } from '../utils/api'
-import { Playlist } from '../types'
+import Input from '@material-ui/core/Input'
+import Button from '@material-ui/core/Button'
 import { getAverageAudioFeaturesForPlaylist } from '../utils/api'
+import { PlaylistAverageAudioFeatures } from '../types'
 
 interface Props {
-  setPlaylist: (playlist: PlaylistAverageAudioFeatures) => void
+  onClick: (playlist: PlaylistAverageAudioFeatures) => void
   buttonText: React.ReactNode
 }
 
@@ -19,26 +18,22 @@ const InputWithButton = (props: Props) => {
     setInputId(event.target.value)
   }
 
-  const handleButtonClick = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    props: Props
-  ) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const res = await getAudioFeaturesForPlaylist(inputId)
+    const res = await getAverageAudioFeaturesForPlaylist(inputId)
+    console.log('res', res)
     props.onClick(res)
   }
 
   return (
-    <div>
+    <form onSubmit={onSubmit}>
       <Input
         placeholder="Playlist id"
         value={inputId}
         onChange={handleInputChange}
       />
-      <Button onClick={event => handleButtonClick(event, props)}>
-        {props.buttonText}
-      </Button>
-    </div>
+      <Button type="submit">{props.buttonText}</Button>
+    </form>
   )
 }
 
