@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getAudioFeaturesForPlaylist } from "../utils/api";
 
 const InputWithButton = props => {
     const [inputId, setInputId] = useState("");
@@ -7,8 +8,9 @@ const InputWithButton = props => {
         setInputId(event.target.value)
     }
 
-    const handleButtonClick = event => {
-        console.log(inputId)
+    const handleButtonClick = async event => {
+        event.preventDefault();
+        const res = await getAudioFeaturesForPlaylist(inputId);
     }
 
     return (
