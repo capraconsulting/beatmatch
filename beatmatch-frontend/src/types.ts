@@ -21,12 +21,12 @@ export interface Track {
 export interface AverageAudioFeatures extends AudioFeatures {}
 
 export interface Playlist {
-  average: AverageAudioFeatures
+  aggregatedAudioFeatures: AverageAudioFeatures
   tracks: Track[]
 }
 
 export const getMockPlaylist = (): Playlist => ({
-  average: {
+  aggregatedAudioFeatures: {
     acousticness: 0.09540383066666666,
     danceability: 0.652746666666667,
     energy: 0.7252799999999999,
