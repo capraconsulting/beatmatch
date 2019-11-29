@@ -1,4 +1,4 @@
-import { PlaylistAverageAudioFeatures } from '../types'
+import { AudioFeatures } from '../types'
 
 export async function getAudioFeaturesForPlaylist(playlistId: String) {
   const url = `http://localhost:3000/playlist/${playlistId}`
@@ -24,7 +24,7 @@ const mock = {
 
 export async function getAverageAudioFeaturesForPlaylist(
   playlistId: String
-): Promise<PlaylistAverageAudioFeatures> {
+): Promise<AudioFeatures> {
   const url = `http://localhost:3000/averageplaylist/${playlistId}`
   //const response = await fetch(url)
   //const json = await response.json()

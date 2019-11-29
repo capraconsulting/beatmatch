@@ -1,11 +1,24 @@
 import React from 'react'
-import AveragePlaylistBarWithInput from './components/AveragePlaylistBarWithInput'
+import AudioFeaturesBarChart from './components/charts/AudioFeaturesBarChart'
 import './App.css'
+import { Provider, Consumer } from './StateContext'
+import { getMockPlaylist } from './types'
 
 function App() {
   return (
     <div className="App">
-      <AveragePlaylistBarWithInput />
+      <Provider
+        value={{
+          playlistOne: getMockPlaylist(),
+          playlistTwo: getMockPlaylist()
+        }}
+      >
+        <Consumer>
+          {({ playlistOne }) => (
+            <AudioFeaturesBarChart audioFeatures={playlistOne.average} />
+          )}
+        </Consumer>
+      </Provider>
     </div>
   )
 }

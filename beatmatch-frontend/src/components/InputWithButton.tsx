@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 import { getAverageAudioFeaturesForPlaylist } from '../utils/api'
-import { PlaylistAverageAudioFeatures } from '../types'
+import { AudioFeatures } from '../types'
 
 interface Props {
-  onClick: (playlist: PlaylistAverageAudioFeatures) => void
+  onClick: (playlist: AudioFeatures) => void
   buttonText: React.ReactNode
 }
 
