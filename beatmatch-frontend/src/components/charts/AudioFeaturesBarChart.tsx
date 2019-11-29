@@ -7,6 +7,7 @@ type Props = {
 }
 
 const AudioFeaturesBarChart = ({ audioFeatures }: Props) => {
+  console.log('audioFeatures', audioFeatures)
   return (
     <div>
       <VictoryBar

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
-import { getAverageAudioFeaturesForPlaylist } from '../utils/api'
-import { AudioFeatures } from '../types'
+import { getPlaylist } from '../utils/api'
+import { Playlist } from '../types'
 
 interface Props {
-  onClick: (playlist: AudioFeatures) => void
+  onClick: (playlist: Playlist) => void
   buttonText: React.ReactNode
 }
 
@@ -20,7 +20,7 @@ const InputWithButton = (props: Props) => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const res = await getAverageAudioFeaturesForPlaylist(inputId)
+    const res = await getPlaylist(inputId)
     console.log('res', res)
     props.onClick(res)
   }
