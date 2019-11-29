@@ -13,13 +13,13 @@ var spotify = new Spotify({
 router.get('/playlist/:playlist_id', function(req, res, next) {
   spotify
   .request(`${config.spotify.baseUrl}/playlists/${req.params.playlist_id}`)
-  .then(function(data) {
-    var track_ids = getTrackIds(data.tracks.items);
+  .then(function(playlist) {
+    var track_ids = getTrackIds(playlist.tracks.items);
     var track_ids_string = track_ids.join(",");
     spotify
     .request(`${config.spotify.baseUrl}/audio-features/?ids=${track_ids_string}`)
-    .then(function(data2) {
-      return res.send(data2);
+    .then(function(audiofeatures) {
+      return res.send(audiofeatures);
     })
     .catch(function(err) {
       console.error('Error occurred: ' + err); 
