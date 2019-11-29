@@ -17,5 +17,14 @@
     "node-spotify-api": "^1.1.1",
     "nodemon": "^2.0.1",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "husky": "3.1.0",
+    "pretty-quick": "2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
