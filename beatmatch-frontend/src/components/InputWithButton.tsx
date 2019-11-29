@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { getAudioFeaturesForPlaylist } from '../utils/api'
 import { Playlist } from '../types'
+import { getAverageAudioFeaturesForPlaylist } from '../utils/api'
 
 interface Props {
   setPlaylist: (playlist: Playlist) => void
@@ -21,7 +21,7 @@ const InputWithButton = (props: Props) => {
     props: Props
   ) => {
     event.preventDefault()
-    const res = await getAudioFeaturesForPlaylist(inputId)
+    const res = await getAverageAudioFeaturesForPlaylist(inputId)
     props.setPlaylist(res)
   }
 
