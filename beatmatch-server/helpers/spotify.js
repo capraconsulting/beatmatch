@@ -42,7 +42,8 @@ const getPlaylistWithTracks = async playlistId => {
 
   const playlistMetaInfo = {
     id: playlistInfo.id,
-    name: playlistInfo.name
+    name: playlistInfo.name,
+    owner: playlistInfo.owner.display_name
   }
 
   const numTracks = playlistInfo.tracks.total
