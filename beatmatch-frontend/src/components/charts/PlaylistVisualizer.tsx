@@ -7,7 +7,7 @@ type Props = {
 }
 const PlaylistVisualizer = ({ playlist }: Props) => (
   <div>
-    <AudioFeaturesBarChart audioFeatures={playlist.aggregatedAudioFeatures} />
+    <AudioFeaturesBarChart audioFeatures={playlist.averageAudioFeatures} />
   </div>
 )
 
