@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import Input from '@material-ui/core/Input'
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { getPlaylist } from '../utils/api'
 import { Playlist } from '../types'
 
 interface Props {
-  onClick: (playlist: Playlist) => void
+  onSelect: (playlist: Playlist) => void
   buttonText: React.ReactNode
 }
 
-const InputWithButton = (props: Props) => {
+const PlaylistSelector = (props: Props) => {
   const [inputId, setInputId] = useState('')
 
   const handleInputChange = (event: {
@@ -22,12 +22,14 @@ const InputWithButton = (props: Props) => {
     event.preventDefault()
     const res = await getPlaylist(inputId)
     console.log('res', res)
-    props.onClick(res)
+    props.onSelect(res)
   }
 
   return (
     <form onSubmit={onSubmit}>
-      <Input
+      <TextField
+        margin="dense"
+        variant="outlined"
         placeholder="Playlist id"
         value={inputId}
         onChange={handleInputChange}
@@ -37,4 +39,4 @@ const InputWithButton = (props: Props) => {
   )
 }
 
-export default InputWithButton
+export default PlaylistSelector
