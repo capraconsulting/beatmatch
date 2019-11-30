@@ -2,7 +2,7 @@ import React from 'react'
 import { Playlist, getMockPlaylist } from './types'
 import PlaylistSelector from './components/PlaylistSelector'
 import { Grid, Container } from '@material-ui/core'
-import Simularity from './components/Simularity'
+import Similarity from './components/Similarity'
 import PlaylistVisualizer from './components/charts/PlaylistVisualizer'
 
 const USE_MOCK1 = true
@@ -40,7 +40,7 @@ function App() {
 
         {playlist1 && playlist2 && (
           <Grid item xs={12}>
-            <Simularity {...{ playlist1, playlist2 }} />
+            <Similarity {...{ playlist1, playlist2 }} />
           </Grid>
         )}
         {playlist1 && (

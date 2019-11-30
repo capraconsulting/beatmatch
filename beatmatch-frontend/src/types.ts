@@ -21,11 +21,23 @@ export interface Track {
 export interface AverageAudioFeatures extends AudioFeatures {}
 
 export interface Playlist {
+  playlistInfo: {
+    id: String
+    name: String
+  }
   aggregatedAudioFeatures: AverageAudioFeatures
   tracks: Track[]
 }
 
+export interface Similarity {
+  similarity: number
+}
+
 export const getMockPlaylist = (): Playlist => ({
+  playlistInfo: {
+    id: '3oFzkbDQRRXNGZKztOa0zM',
+    name: 'mock playlist'
+  },
   aggregatedAudioFeatures: {
     acousticness: 0.09540383066666666,
     danceability: 0.652746666666667,
