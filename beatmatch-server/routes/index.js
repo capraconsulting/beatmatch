@@ -13,9 +13,9 @@ router.use(
 /* GET songs for playlist. */
 router.get('/playlist/:playlistId', async (req, res, next) => {
   const playlist = await getPlaylistWithAudioFeatures(req.params.playlistId)
-  const aggregatedAudioFeatures = getAverageAudioFeatures(playlist)
+  const averageAudioFeatures = getAverageAudioFeatures(playlist)
   return res.send({
-    aggregatedAudioFeatures,
+    averageAudioFeatures,
     tracks: playlist.tracks,
     playlistInfo: playlist.playlistInfo
   })

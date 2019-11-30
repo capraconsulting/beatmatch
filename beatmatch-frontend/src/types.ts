@@ -25,7 +25,7 @@ export interface Playlist {
     id: String
     name: String
   }
-  aggregatedAudioFeatures: AverageAudioFeatures
+  averageAudioFeatures: AverageAudioFeatures
   tracks: Track[]
 }
 
@@ -38,7 +38,7 @@ export const getMockPlaylist = (): Playlist => ({
     id: '3oFzkbDQRRXNGZKztOa0zM',
     name: 'mock playlist'
   },
-  aggregatedAudioFeatures: {
+  averageAudioFeatures: {
     acousticness: 0.09540383066666666,
     danceability: 0.652746666666667,
     energy: 0.7252799999999999,
