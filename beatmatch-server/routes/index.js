@@ -24,8 +24,13 @@ router.get('/playlist/:playlistId', async (req, res, next) => {
 /* GET similarity score for two playlists */
 router.get('/similarity', async (req, res, next) => {
   const ids = [req.query.firstPlaylistId, req.query.secondPlaylistId]
+
+  console.log(`[/similarity]: ${ids[0]} ${ids[1]}`)
+
   const [p1, p2] = await Promise.all(
-    ids.map(async id => getAggregatedAudioFeatures(await getPlaylist(id)))
+    ids.map(async id =>
+      getAggregatedAudioFeatures(await getPlaylistWithAudioFeatures(id))
+    )
   )
   const similarity = getSimilarity(p1, p2)
   return res.send({
