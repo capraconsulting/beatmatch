@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { getPlaylist } from '../helpers/spotify.js'
+import { getPlaylistWithAudioFeatures } from '../helpers/spotify.js'
 import { getAggregatedAudioFeatures, getSimilarity } from '../helpers/logic.js'
 
 const router = express.Router()
@@ -12,11 +12,12 @@ router.use(
 
 /* GET songs for playlist. */
 router.get('/playlist/:playlistId', async (req, res, next) => {
-  const playlist = await getPlaylist(req.params.playlistId)
+  const playlist = await getPlaylistWithAudioFeatures(req.params.playlistId)
   const aggregatedAudioFeatures = getAggregatedAudioFeatures(playlist)
   return res.send({
     aggregatedAudioFeatures,
-    tracks: playlist.tracks
+    tracks: playlist.tracks,
+    playlistInfo: playlist.playlistInfo
   })
 })
 
