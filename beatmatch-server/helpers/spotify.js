@@ -30,6 +30,12 @@ const getPlaylistWithTracks = async playlistId => {
   const playlistInfo = await spotify.request(
     `${config.spotify.baseUrl}/playlists/${playlistId}`
   )
+
+  const playlistMetaInfo = {
+    id: playlistInfo.id,
+    name: playlistInfo.name,
+  }
+
   const numTracks = playlistInfo.tracks.total
 
   let tracklists = [await getTracks(playlistId, 0)]
@@ -42,12 +48,13 @@ const getPlaylistWithTracks = async playlistId => {
     )
     tracklists = [...tracklists, ...results]
   }
-  return tracklists
+  return [tracklists, playlistMetaInfo]
 }
 
 /* Returns a list of all tracks in a playlist accompanied by their audio features and general details */
 const getPlaylistWithAudioFeatures = async playlistId => {
-  const playlist = await getPlaylistWithTracks(playlistId)
+  const [playlist, playlistMetaInfo] = await getPlaylistWithTracks(playlistId)
+  
   const tracksWithAudioFeatures = await Promise.all(
     playlist.map(async tracklist => {
       const trackIdsString = tracklist.map(t => t.id).join(',')
@@ -73,7 +80,10 @@ const getPlaylistWithAudioFeatures = async playlistId => {
     ...acc,
     ...curr
   ])
-  return { tracks: flattened }
+  return { 
+    tracks: flattened,
+    playlistInfo: playlistMetaInfo 
+  }
 }
 
-export { spotify, getPlaylistWithAudioFeatures as getPlaylist }
+export { spotify, getPlaylistWithAudioFeatures}
