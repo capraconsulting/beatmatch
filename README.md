@@ -4,6 +4,13 @@
 
 #hackathon
 
+Demo playlist ids
+
+```
+NRK MP3: 6M580NqfelAJ8UkZeeMZr0
+VG Lista Topp 40: 0owCF7vimN4OuZrrfrN5IL
+```
+
 ## Backend
 
 The backend runs on port 3000.

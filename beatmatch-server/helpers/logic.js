@@ -16,9 +16,9 @@ export const audioFeatureKeys = [
 
 export const normalize = audioFeatures => ({
   ...audioFeatures,
-  time_signature: (audioFeatures.time_signature /= 4),
-  loudness: (audioFeatures.loudness *= -1 / 100),
-  tempo: (audioFeatures.tempo /= 200)
+  time_signature: audioFeatures.time_signature / 4,
+  loudness: (audioFeatures.loudness * -1) / 100,
+  tempo: audioFeatures.tempo / 200
 })
 
 /* Calculate cosine similarity between two sets of aggregated audio features */
