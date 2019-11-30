@@ -1,35 +1,29 @@
 import React from 'react'
-import AudioFeaturesBarChart from './components/charts/AudioFeaturesBarChart'
 import './App.css'
-import { Provider, Consumer } from './StateContext'
-import { getMockPlaylist, Playlist } from './types'
-import InputWithButton from './components/InputWithButton'
+import { Playlist } from './types'
+import PlaylistSelector from './components/PlaylistSelector'
+import { Divider } from '@material-ui/core'
+import Simularity from './components/Simularity'
+import PlaylistVisualizer from './components/charts/PlaylistVisualizer'
 
 function App() {
-  const [playlist, setPlaylist] = React.useState<Playlist | null>(null)
+  const [playlist1, setPlaylist1] = React.useState<Playlist | null>(null)
+  const [playlist2, setPlaylist2] = React.useState<Playlist | null>(null)
 
   return (
     <div className="App">
-      <InputWithButton
-        buttonText="Sett playlist"
-        onClick={res => setPlaylist(res)}
+      <PlaylistSelector
+        buttonText="Playlist 1"
+        onSelect={res => setPlaylist1(res)}
       />
-      {playlist && (
-        <Provider
-          value={{
-            playlistOne: playlist,
-            playlistTwo: playlist
-          }}
-        >
-          <Consumer>
-            {({ playlistOne }) => (
-              <AudioFeaturesBarChart
-                audioFeatures={playlistOne.aggregatedAudioFeatures}
-              />
-            )}
-          </Consumer>
-        </Provider>
-      )}
+      <PlaylistSelector
+        buttonText="Playlist 2"
+        onSelect={res => setPlaylist2(res)}
+      />
+      <Divider />
+      {playlist1 && playlist2 && <Simularity />}
+      {playlist1 && <PlaylistVisualizer playlist={playlist1} />}
+      {playlist2 && <PlaylistVisualizer playlist={playlist2} />}
     </div>
   )
 }
