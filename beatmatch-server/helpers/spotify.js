@@ -1,3 +1,4 @@
+import { audioFeatureKeys, normalize } from './logic';
 const Spotify = require('node-spotify-api')
 const config = require('../config.js')
 const spotify = new Spotify({
@@ -6,6 +7,14 @@ const spotify = new Spotify({
 })
 
 const TRACK_LIMIT = 100
+
+const filterAudioFeatures = (audioFeatures, whitelist) => {
+  const filteredObject = {}
+  whitelist.map(key => {
+    filteredObject[key] = audioFeatures[key]
+  })
+  return filteredObject
+}
 
 const getTracks = async (playlistId, offset) => {
   const res = await spotify.request(
@@ -61,15 +70,11 @@ const getPlaylistWithAudioFeatures = async playlistId => {
       const audioFeaturesRaw = await spotify.request(
         `${config.spotify.baseUrl}/audio-features/?ids=${trackIdsString}`
       )
-      const audioFeatures = audioFeaturesRaw['audio_features'].map(t => ({
-        danceability: t.danceability,
-        energy: t.energy,
-        speechiness: t.speechiness,
-        acousticness: t.acousticness,
-        instrumentalness: t.instrumentalness,
-        liveness: t.liveness,
-        valence: t.valence
-      }))
+
+      const audioFeatures = audioFeaturesRaw['audio_features'].map(t =>
+        filterAudioFeatures(t, audioFeatureKeys)
+      ).map(normalize)
+
       return audioFeatures.map((t, i) => ({
         audioFeatures: t,
         ...tracklist[i]
