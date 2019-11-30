@@ -1,3 +1,4 @@
+import { audioFeatureKeys, normalize } from './logic'
 const Spotify = require('node-spotify-api')
 const config = require('../config.js')
 const spotify = new Spotify({
@@ -6,6 +7,14 @@ const spotify = new Spotify({
 })
 
 const TRACK_LIMIT = 100
+
+const filterAudioFeatures = (audioFeatures, whitelist) => {
+  const filteredObject = {}
+  whitelist.map(key => {
+    filteredObject[key] = audioFeatures[key]
+  })
+  return filteredObject
+}
 
 const getTracks = async (playlistId, offset) => {
   const res = await spotify.request(
@@ -33,7 +42,7 @@ const getPlaylistWithTracks = async playlistId => {
 
   const playlistMetaInfo = {
     id: playlistInfo.id,
-    name: playlistInfo.name,
+    name: playlistInfo.name
   }
 
   const numTracks = playlistInfo.tracks.total
@@ -54,22 +63,18 @@ const getPlaylistWithTracks = async playlistId => {
 /* Returns a list of all tracks in a playlist accompanied by their audio features and general details */
 const getPlaylistWithAudioFeatures = async playlistId => {
   const [playlist, playlistMetaInfo] = await getPlaylistWithTracks(playlistId)
-  
+
   const tracksWithAudioFeatures = await Promise.all(
     playlist.map(async tracklist => {
       const trackIdsString = tracklist.map(t => t.id).join(',')
       const audioFeaturesRaw = await spotify.request(
         `${config.spotify.baseUrl}/audio-features/?ids=${trackIdsString}`
       )
-      const audioFeatures = audioFeaturesRaw['audio_features'].map(t => ({
-        danceability: t.danceability,
-        energy: t.energy,
-        speechiness: t.speechiness,
-        acousticness: t.acousticness,
-        instrumentalness: t.instrumentalness,
-        liveness: t.liveness,
-        valence: t.valence
-      }))
+
+      const audioFeatures = audioFeaturesRaw['audio_features']
+        .map(t => filterAudioFeatures(t, audioFeatureKeys))
+        .map(normalize)
+
       return audioFeatures.map((t, i) => ({
         audioFeatures: t,
         ...tracklist[i]
@@ -80,10 +85,10 @@ const getPlaylistWithAudioFeatures = async playlistId => {
     ...acc,
     ...curr
   ])
-  return { 
+  return {
     tracks: flattened,
-    playlistInfo: playlistMetaInfo 
+    playlistInfo: playlistMetaInfo
   }
 }
 
-export { spotify, getPlaylistWithAudioFeatures}
+export { spotify, getPlaylistWithAudioFeatures }
