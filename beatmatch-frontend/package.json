@@ -38,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@types/victory": "33.1.3",
+    "@types/victory": "33.1.4",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "6.9.0",
     "eslint-plugin-prettier": "3.1.2",
