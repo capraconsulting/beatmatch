@@ -12,7 +12,7 @@
     "react-dom": "16.12.0",
     "react-scripts": "3.3.0",
     "typescript": "3.7.5",
-    "victory": "34.0.0"
+    "victory": "34.0.1"
   },
   "scripts": {
     "start": "PORT=4000 BROWSER=none react-scripts start",
